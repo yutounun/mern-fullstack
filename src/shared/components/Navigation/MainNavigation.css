@@ -9,6 +9,11 @@
   margin-right: 2rem;
   cursor: pointer;
 }
+@media (max-width: 768px) {
+  .main-navigation__links {
+    display: none;
+  }
+}
 
 .main-navigation__menu-btn span {
   display: block;
