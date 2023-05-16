@@ -10,6 +10,11 @@ const inputReducer = (state, action) => {
         value: action.value,
         isValid: validate(action.value, action.validators),
       };
+    case "TOUCH":
+      return {
+        ...state,
+        isTouched: true,
+      };
     default:
       return state;
   }
@@ -29,6 +34,10 @@ const Input = (props) => {
     });
   };
 
+  const touchHandler = () => {
+    dispatch({ type: "TOUCH" });
+  };
+
   const element =
     props.element === "input" ? (
       <input
@@ -37,6 +46,7 @@ const Input = (props) => {
         placeholder={props.placeholder}
         value={inputState.value}
         onChange={onChangeHandler}
+        onBlur={touchHandler}
       />
     ) : (
       <textarea id={props.id} rows={props.rows || 3} />
@@ -49,7 +59,7 @@ const Input = (props) => {
     >
       <label htmlFor={props.id}>{props.label}</label>
       {element}
-      {!inputState.isValid && <p>{props.errorText}</p>}
+      {!inputState.isValid && inputState.isTouched && <p>{props.errorText}</p>}
     </div>
   );
 };
